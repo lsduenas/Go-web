@@ -1,0 +1,10 @@
+[{"id":1,"name":"Oil - Margarine","quantity":439,"code_value":"S82254D","is_published":true,"expiration":"15/12/2021","price":71.42},
+{"id":2,"name":"Pineapple - Canned, Rings","quantity":345,"code_value":"M4637","is_published":true,"expiration":"09/08/2021","price":352.79},
+{"id":3,"name":"Wine - Red Oakridge Merlot","quantity":367,"code_value":"T65812","is_published":false,"expiration":"24/05/2021","price":179.23},
+{"id":4,"name":"Cookie - Oatmeal","quantity":130,"code_value":"M7157","is_published":false,"expiration":"28/01/2022","price":275.47},
+{"id":5,"name":"Flavouring Vanilla Artificial","quantity":336,"code_value":"S60152S","is_published":true,"expiration":"10/02/2022","price":839.02},
+{"id":6,"name":"Cake - Lemon Chiffon","quantity":446,"code_value":"S51821A","is_published":true,"expiration":"06/04/2022","price":895.88},
+{"id":7,"name":"Melon - Honey Dew","quantity":165,"code_value":"S52381G","is_published":true,"expiration":"01/06/2021","price":622.33},
+{"id":8,"name":"Cut Wakame - Hanawakaba","quantity":413,"code_value":"S93511","is_published":true,"expiration":"22/12/2021","price":480.54},
+{"id":9,"name":"Apple - Delicious, Golden","quantity":225,"code_value":"S73046D","is_published":true,"expiration":"02/04/2021","price":976.27},
+{"id":10,"name":"Soup Bowl Clear 8oz92008","quantity":424,"code_value":"B180","is_published":false,"expiration":"18/10/2021","price":92.8}]
