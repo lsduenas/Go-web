@@ -4,6 +4,7 @@ import (
 	"app/internal/domain"
 	"app/pkg/store"
 	"errors"
+	"fmt"
 )
 
 type ProductRepository struct {
@@ -46,6 +47,8 @@ func (pr *ProductRepository) GetById(id int) (product domain.Product, err error)
 	if err != nil {
 		err = errors.New("Product not founded")
 	}
+	fmt.Println("desde repo")
+	fmt.Println(product)
 	return
 }
 

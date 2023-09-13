@@ -79,6 +79,7 @@ func Validator(pr domain.Product) (err error) { // Se valida al recibir en el re
 }
 
 func ValidateToken(token string) (err error){
+
 	if token != os.Getenv("TOKEN") {
 		err = fmt.Errorf("Invalid token")
 	}
@@ -88,10 +89,10 @@ func ValidateToken(token string) (err error){
 // CRUD
 func (hd *HandlerProduct) GetById() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		token := ctx.GetHeader("token")
+		token := ctx.GetHeader("Token")
 		// validate token
-		err := ValidateToken(token)
-		if err != nil {
+		
+		if token != hd.token {
 			code := http.StatusForbidden
 			body := ResponseBody{Message: "Invalid Token", Data: nil}
 
@@ -108,9 +109,10 @@ func (hd *HandlerProduct) GetById() gin.HandlerFunc {
 			ctx.JSON(code, body)
 			return
 		}
-
+		fmt.Println(id)
 		// process
 		pr, err := hd.sp.GetById(id)
+		
 		if err != nil {
 			code := http.StatusNotFound
 			body := ResponseBody{
@@ -405,7 +407,7 @@ func (hd *HandlerProduct) GetAll() gin.HandlerFunc {
 		}
 		
 		productList := hd.sp.GetAll()
-		code := http.StatusCreated
+		code := http.StatusOK
 		ctx.JSON(code, productList)
 	}
 }

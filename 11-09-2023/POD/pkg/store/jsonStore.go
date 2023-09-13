@@ -45,11 +45,10 @@ func (c *ControllerStorage) GetById(id int) (product domain.Product, err error) 
 	}
 	for _, value := range productList {
 		if value.Id == id {
-			product = *value
-		} else {
-			err = errors.New("Product not founded")
-		}
+			product = *value	
+		} 
 	}
+	
 	return
 }
 
