@@ -6,7 +6,6 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
-	"os"
 	"strconv"
 	"time"
 
@@ -35,7 +34,7 @@ type Data struct {
 }
 
 type HandlerProduct struct {
-	sp *product.ServiceProduct
+	sp    *product.ServiceProduct
 	token string
 }
 
@@ -78,28 +77,10 @@ func Validator(pr domain.Product) (err error) { // Se valida al recibir en el re
 	return
 }
 
-func ValidateToken(token string) (err error){
-
-	if token != os.Getenv("TOKEN") {
-		err = fmt.Errorf("Invalid token")
-	}
-	return
-}
-
 // CRUD
 func (hd *HandlerProduct) GetById() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		token := ctx.GetHeader("Token")
-		// validate token
-		
-		if token != hd.token {
-			code := http.StatusForbidden
-			body := ResponseBody{Message: "Invalid Token", Data: nil}
 
-			ctx.JSON(code, body)
-			return
-		}
-		
 		// request
 		id, err := strconv.Atoi(ctx.Param("id"))
 		if err != nil {
@@ -112,7 +93,7 @@ func (hd *HandlerProduct) GetById() gin.HandlerFunc {
 		fmt.Println(id)
 		// process
 		pr, err := hd.sp.GetById(id)
-		
+
 		if err != nil {
 			code := http.StatusNotFound
 			body := ResponseBody{
@@ -143,16 +124,6 @@ func (hd *HandlerProduct) GetById() gin.HandlerFunc {
 
 func (hd *HandlerProduct) Save() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		token := ctx.GetHeader("token")
-		// validate token
-		er := ValidateToken(token)
-		if er != nil {
-			code := http.StatusForbidden
-			body := ResponseBody{Message: "Invalid Token", Data: nil}
-
-			ctx.JSON(code, body)
-			return
-		}
 
 		var reqBody RequestBody
 		err := ctx.ShouldBindJSON(&reqBody)
@@ -219,16 +190,6 @@ func (hd *HandlerProduct) Save() gin.HandlerFunc {
 
 func (hd *HandlerProduct) DeleteById() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		token := ctx.GetHeader("token")
-		// validate token
-		err := ValidateToken(token)
-		if err != nil {
-			code := http.StatusForbidden
-			body := ResponseBody{Message: "Invalid Token", Data: nil}
-
-			ctx.JSON(code, body)
-			return
-		}
 
 		// request
 		id, err := strconv.Atoi(ctx.Param("id"))
@@ -259,16 +220,6 @@ func (hd *HandlerProduct) DeleteById() gin.HandlerFunc {
 
 func (hd *HandlerProduct) Update() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		token := ctx.GetHeader("token")
-		// validate token
-		er := ValidateToken(token)
-		if er != nil {
-			code := http.StatusForbidden
-			body := ResponseBody{Message: "Invalid Token", Data: nil}
-
-			ctx.JSON(code, body)
-			return
-		}
 
 		var reqBody RequestBody
 		err := ctx.ShouldBindJSON(&reqBody)
@@ -295,13 +246,13 @@ func (hd *HandlerProduct) Update() gin.HandlerFunc {
 			ctx.JSON(code, message)
 			return
 		}
-		id, err:= strconv.Atoi(ctx.Param("id")) // TO DO validate id - idempotencia
+		id, err := strconv.Atoi(ctx.Param("id")) // TO DO validate id - idempotencia
 		if err != nil {
 			panic("Id not found")
 		}
 
 		pr := &domain.Product{
-			Id: 		  id,
+			Id:           id,
 			Name:         reqBody.Name,
 			Quantity:     reqBody.Quantity,
 			Code_value:   reqBody.Code_value,
@@ -337,19 +288,8 @@ func (hd *HandlerProduct) Update() gin.HandlerFunc {
 	}
 }
 
-
 func (hd *HandlerProduct) UpdateName() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		token := ctx.GetHeader("token")
-		// validate token
-		er := ValidateToken(token)
-		if er != nil {
-			code := http.StatusForbidden
-			body := ResponseBody{Message: "Invalid Token", Data: nil}
-
-			ctx.JSON(code, body)
-			return
-		}
 
 		var reqBody NameProduct
 		err := ctx.ShouldBindJSON(&reqBody)
@@ -359,8 +299,8 @@ func (hd *HandlerProduct) UpdateName() gin.HandlerFunc {
 			ctx.JSON(code, body)
 			return
 		}
-		
-		id, err:= strconv.Atoi(ctx.Param("id")) // TO DO validate id - idempotencia
+
+		id, err := strconv.Atoi(ctx.Param("id")) // TO DO validate id - idempotencia
 		if err != nil {
 			panic("Id not found")
 		}
@@ -395,20 +335,8 @@ func (hd *HandlerProduct) UpdateName() gin.HandlerFunc {
 
 func (hd *HandlerProduct) GetAll() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		token := ctx.GetHeader("token")
-		// validate token
-		err := ValidateToken(token)
-		if err != nil {
-			code := http.StatusForbidden
-			body := ResponseBody{Message: "Invalid Token", Data: nil}
-
-			ctx.JSON(code, body)
-			return
-		}
-		
 		productList := hd.sp.GetAll()
 		code := http.StatusOK
 		ctx.JSON(code, productList)
 	}
 }
-

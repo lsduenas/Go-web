@@ -2,6 +2,7 @@ package main
 
 import (
 	"app/cmd/server/handler"
+	"app/cmd/server/middlewares"
 	"app/internal/product"
 	"app/pkg/store"
 	"log"
@@ -16,7 +17,7 @@ func main() {
 	// ENV variables
 	err := godotenv.Load()
 	if err != nil {
-		log.Fatal("error al intentar cargar archivo .env")
+		log.Fatal("error trying to load .env file")
 	}
 	token := os.Getenv("TOKEN")
 
@@ -34,12 +35,14 @@ func main() {
 	hd := handler.NewHandlerProduct(sp, token)
 
 	// server
-	server := gin.Default()
-	server.Use(gin.Logger())
-	server.Use(gin.Recovery())
+	server := gin.New()
+	server.Use(
+		gin.Recovery(),
+		gin.Logger(),
+	)
 
 	group := server.Group("/products")
-
+	group.Use(middlewares.Authenticator())
 	// handlers
 	group.GET("/", hd.GetAll())
 	group.POST("/", hd.Save())
