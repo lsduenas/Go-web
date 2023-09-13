@@ -77,7 +77,19 @@ func Validator(pr domain.Product) (err error) { // Se valida al recibir en el re
 	return
 }
 
-// CRUD
+// GetProductById godoc
+// @Summary Get product by Id
+// @Tags Products
+// @Description get product
+// @Accept  json
+// @Produce  json
+// @Param        id   path      int  true  "Product ID"
+// @Param token header string true "Token"
+// @Success 200 {object} handler.ResponseBody
+// @Router /:id [get]
+// @Failure      400  {object}  handler.ResponseBody
+// @Failure      404  {object}  handler.ResponseBody
+// @Failure      500  {object}  handler.ResponseBody
 func (hd *HandlerProduct) GetById() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 
@@ -122,6 +134,19 @@ func (hd *HandlerProduct) GetById() gin.HandlerFunc {
 	}
 }
 
+// SaveProduct godoc
+// @Summary Save product
+// @Tags Products
+// @Description save product
+// @Accept  json
+// @Produce  json
+// @Param token header string true "Token"
+// @Param        body body handler.RequestBody true "Product"
+// @Success 200 {object} handler.ResponseBody
+// @Router / [post]
+// @Failure      400  {object}  handler.ResponseBody
+// @Failure      404  {object}  handler.ResponseBody
+// @Failure      500  {object}  handler.ResponseBody
 func (hd *HandlerProduct) Save() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 
@@ -188,6 +213,19 @@ func (hd *HandlerProduct) Save() gin.HandlerFunc {
 	}
 }
 
+// DeleteProductById godoc
+// @Summary Delete product by id
+// @Tags Products
+// @Description delete product
+// @Accept  json
+// @Produce  json
+// @Param        id   path      int  true  "Product ID"
+// @Param token header string true "Token"
+// @Success 202 {object} handler.ResponseBody
+// @Router /:id [delete]
+// @Failure      400  {object}  handler.ResponseBody
+// @Failure      404  {object}  handler.ResponseBody
+// @Failure      500  {object}  handler.ResponseBody
 func (hd *HandlerProduct) DeleteById() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 
@@ -218,6 +256,20 @@ func (hd *HandlerProduct) DeleteById() gin.HandlerFunc {
 	}
 }
 
+// UpdateProduct godoc
+// @Summary Update product
+// @Tags Products
+// @Description update product
+// @Accept  json
+// @Produce  json
+// @Param        id   path      int  true  "Product ID"
+// @Param token header string true "Token"
+// @Param        body body handler.RequestBody true "Product"
+// @Success 200 {object} handler.ResponseBody
+// @Router /:id [put]
+// @Failure      400  {object}  handler.ResponseBody
+// @Failure      404  {object}  handler.ResponseBody
+// @Failure      500  {object}  handler.ResponseBody
 func (hd *HandlerProduct) Update() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 
@@ -271,7 +323,7 @@ func (hd *HandlerProduct) Update() gin.HandlerFunc {
 			return
 		}
 
-		code := http.StatusCreated
+		code := http.StatusOK
 		body := ResponseBody{
 			Message: "Success",
 			Data: &Data{
@@ -288,6 +340,20 @@ func (hd *HandlerProduct) Update() gin.HandlerFunc {
 	}
 }
 
+// UpdateProductName godoc
+// @Summary Update product name
+// @Tags Products
+// @Description update product name
+// @Accept  json
+// @Produce  json
+// @Param        id   path      int  true  "Product ID"
+// @Param        body body handler.NameProduct true "Product"
+// @Param token header string true "Token"
+// @Success 200 {object} handler.ResponseBody
+// @Router /:id [patch]
+// @Failure      400  {object}  handler.ResponseBody
+// @Failure      404  {object}  handler.ResponseBody
+// @Failure      500  {object}  handler.ResponseBody
 func (hd *HandlerProduct) UpdateName() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 
@@ -316,7 +382,7 @@ func (hd *HandlerProduct) UpdateName() gin.HandlerFunc {
 			return
 		}
 
-		code := http.StatusCreated
+		code := http.StatusOK
 		body := ResponseBody{
 			Message: "Success",
 			Data: &Data{
@@ -333,6 +399,18 @@ func (hd *HandlerProduct) UpdateName() gin.HandlerFunc {
 	}
 }
 
+// GetProductList godoc
+// @Summary Get products list
+// @Tags Products
+// @Description get products
+// @Accept  json
+// @Produce  json
+// @Param token header string true "Token"
+// @Success 200 {object} handler.ResponseBody
+// @Router / [get]
+// @Failure      400  {object}  handler.ResponseBody
+// @Failure      404  {object}  handler.ResponseBody
+// @Failure      500  {object}  handler.ResponseBody
 func (hd *HandlerProduct) GetAll() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		productList := hd.sp.GetAll()

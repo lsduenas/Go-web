@@ -1,0 +1,298 @@
+basePath: /products
+definitions:
+  handler.Data:
+    properties:
+      code_value:
+        type: string
+      expiration:
+        type: string
+      id:
+        type: integer
+      is_published:
+        type: boolean
+      name:
+        type: string
+      price:
+        type: number
+      quantity:
+        type: integer
+    type: object
+  handler.NameProduct:
+    properties:
+      name:
+        type: string
+    type: object
+  handler.RequestBody:
+    properties:
+      code_value:
+        type: string
+      expiration:
+        type: string
+      is_published:
+        description: it can be false
+        type: boolean
+      name:
+        type: string
+      price:
+        type: number
+      quantity:
+        type: integer
+    required:
+    - code_value
+    - expiration
+    - name
+    - price
+    - quantity
+    type: object
+  handler.ResponseBody:
+    properties:
+      data:
+        $ref: '#/definitions/handler.Data'
+      message:
+        type: string
+    type: object
+info:
+  contact:
+    name: API Support
+    url: https://developers.mercadolibre.com.ar/support
+  description: This API Handle MELI Products.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: https://developers.mercadolibre.com.ar/es_ar/terminos-y-condiciones
+  title: Products API - Bootcamp Go
+  version: "1.0"
+paths:
+  /:
+    get:
+      consumes:
+      - application/json
+      description: get products
+      parameters:
+      - description: Token
+        in: header
+        name: token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.ResponseBody'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.ResponseBody'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.ResponseBody'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.ResponseBody'
+      summary: Get products list
+      tags:
+      - Products
+    post:
+      consumes:
+      - application/json
+      description: save product
+      parameters:
+      - description: Token
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: Product
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/handler.RequestBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.ResponseBody'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.ResponseBody'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.ResponseBody'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.ResponseBody'
+      summary: Save product
+      tags:
+      - Products
+  /:id:
+    delete:
+      consumes:
+      - application/json
+      description: delete product
+      parameters:
+      - description: Product ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Token
+        in: header
+        name: token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "202":
+          description: Accepted
+          schema:
+            $ref: '#/definitions/handler.ResponseBody'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.ResponseBody'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.ResponseBody'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.ResponseBody'
+      summary: Delete product by id
+      tags:
+      - Products
+    get:
+      consumes:
+      - application/json
+      description: get product
+      parameters:
+      - description: Product ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Token
+        in: header
+        name: token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.ResponseBody'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.ResponseBody'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.ResponseBody'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.ResponseBody'
+      summary: Get product by Id
+      tags:
+      - Products
+    patch:
+      consumes:
+      - application/json
+      description: update product name
+      parameters:
+      - description: Product ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Product
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/handler.NameProduct'
+      - description: Token
+        in: header
+        name: token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.ResponseBody'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.ResponseBody'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.ResponseBody'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.ResponseBody'
+      summary: Update product name
+      tags:
+      - Products
+    put:
+      consumes:
+      - application/json
+      description: update product
+      parameters:
+      - description: Product ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Token
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: Product
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/handler.RequestBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.ResponseBody'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.ResponseBody'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.ResponseBody'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.ResponseBody'
+      summary: Update product
+      tags:
+      - Products
+swagger: "2.0"
